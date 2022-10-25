@@ -18,5 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/weather/{city}', [WeatherController::class, 'city']);
-Route::get('/weather/{zipcode}/{countryCode}', [WeatherController::class, 'zipcode']);
+//Route::get('/weather/{city}', [WeatherController::class, 'city']);
+//Route::get('/weather/{zipcode}/{countryCode}', [WeatherController::class, 'zipcode']);
