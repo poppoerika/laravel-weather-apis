@@ -22,7 +22,7 @@ class MomentoStore implements Store
 
     public function get($key): CacheGetResponse
     {
-        return $this->client->get($key);
+        return $this->client->get($this->cacheName, $key);
     }
 
     public function many(array $keys)

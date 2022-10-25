@@ -32,13 +32,13 @@ class WeatherController extends Controller
         $cityWeatherInfo = "city_weather_info";
         $result = $this->momentoStore->get($cityWeatherInfo);
         if ($result->asHit()) {
-            return $result->asHit()->value();
+            return json_decode($result->asHit()->value());
         } elseif ($result->asMiss()) {
             $res = $this->httpClient->get($url);
             if ($res->getStatusCode() == 200) {
                 $json = $res->getBody();
                 // 10 minutes TTL
-                $this->momentoStore->put($cityWeatherInfo, json_decode($json), 600);
+                $this->momentoStore->put($cityWeatherInfo, $json, 600);
                 return $res;
             }
         } elseif ($result->asError()) {
