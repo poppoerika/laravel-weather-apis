@@ -2,46 +2,69 @@
 
 namespace App\Http\Controllers;
 
-use DateInterval;
+use App\Extensions\MomentoStore;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Cache;
+use Momento\Auth\EnvMomentoTokenProvider;
+use Momento\Cache\SimpleCacheClient;
 
 class WeatherController extends Controller
 {
+
+    protected MomentoStore $momentoStore;
+    protected Client $httpClient;
+
+    public function __construct()
+    {
+        $cacheName = "laravel-momento";
+        $authProvider = new EnvMomentoTokenProvider("MOMENTO_AUTH_TOKEN");
+        $momentoSimpleCacheClient = new SimpleCacheClient($authProvider, 60);
+        $momentoStore = new MomentoStore($momentoSimpleCacheClient, $cacheName);
+        $this->momentoStore = $momentoStore;
+
+        $httpClient = new Client();
+        $this->httpClient = $httpClient;
+    }
+
     public function city($city)
     {
-        $api_key = config("weatherapi.api_key");
-        $client = new Client();
-        $url = "https://api.openweathermap.org/data/2.5/weather?q={$city}&appid={$api_key}";
+        $apiKey = config("weatherapi.api_key");
+        $url = "https://api.openweathermap.org/data/2.5/weather?q={$city}&appid={$apiKey}";
         $cityWeatherInfo = "city_weather_info";
-        $result = Cache::get($cityWeatherInfo);
-        if (is_null($result)) {
-            $res = $client->get($url);
+        $result = $this->momentoStore->get($cityWeatherInfo);
+        if ($result->asHit()) {
+            return $result->asHit()->value();
+        } elseif ($result->asMiss()) {
+            $res = $this->httpClient->get($url);
             if ($res->getStatusCode() == 200) {
                 $json = $res->getBody();
                 // 10 minutes TTL
-                Cache::put($cityWeatherInfo, json_decode($json), new DateInterval( "PT10M" ));
+                $this->momentoStore->put($cityWeatherInfo, json_decode($json), 600);
                 return $res;
             }
+        } elseif ($result->asError()) {
+            return $result->asError()->message();
         }
         return $result;
     }
 
     public function zipcode($zipcode, $countryCode)
     {
-        $api_key = config("weatherapi.api_key");
-        $client = new Client();
-        $url = "https://api.openweathermap.org/data/2.5/weather?q={$zipcode},{$countryCode}&appid={$api_key}";
-        $cityWeatherInfo = "city_weather_info";
-        $result = Cache::get($cityWeatherInfo);
-        if (is_null($result)) {
-            $res = $client->get($url);
+        $apiKey = config("weatherapi.api_key");
+        $url = "https://api.openweathermap.org/data/2.5/weather?q={$zipcode},{$countryCode}&appid={$apiKey}";
+        $zipcodeWeatherInfo = "zipcode_weather_info";
+        $result = $this->momentoStore->get($zipcodeWeatherInfo);
+        if ($result->asHit()) {
+            return $result->asHit()->value();
+        } elseif ($result->asMiss()) {
+            $res = $this->httpClient->get($url);
             if ($res->getStatusCode() == 200) {
                 $json = $res->getBody();
                 // 10 minutes TTL
-                Cache::put($cityWeatherInfo, json_decode($json), new DateInterval( "PT10M" ));
+                $this->momentoStore->put($zipcodeWeatherInfo, json_decode($json), 600);
                 return $res;
             }
+        } elseif ($result->asError()) {
+            return $result->asError()->message();
         }
         return $result;
     }
