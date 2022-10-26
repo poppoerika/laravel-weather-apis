@@ -93,7 +93,9 @@ return [
         ],
 
         'momento' => [
-            'driver' => 'momento'
+            'driver' => 'momento',
+            'cache_name' => env('MOMENTO_CACHE_NAME'),
+            'default_ttl' => 60,
         ],
 
     ],
