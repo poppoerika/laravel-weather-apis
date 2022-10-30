@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/weather/{city}', [WeatherController::class, 'city']);
 Route::get('/weather/{zipcode}/{countryCode}', [WeatherController::class, 'zipcode']);
+Route::get('/weather/id/{cityId}', [WeatherController::class, 'cityId']);

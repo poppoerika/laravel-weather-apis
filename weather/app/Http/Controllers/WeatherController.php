@@ -62,4 +62,23 @@ class WeatherController extends Controller
             }
         }
     }
+
+    // This function uses MomentoTaggedCache to store and retrieve a key/value pair.
+    public function cityId($cityId) {
+        $apiKey = config("weatherapi.api_key");
+        $url = "https://api.openweathermap.org/data/2.5/weather?id={$cityId}&appid={$apiKey}";
+        $cityWeatherInfo = "city_id_weather_info";
+        $result = Cache::tags(['weather', $cityId])->get($cityWeatherInfo);
+        if (!is_null($result)) {
+            return $result;
+        } else {
+            $res = $this->httpClient->get($url);
+            if ($res->getStatusCode() == 200) {
+                $json = $res->getBody();
+                // 10 minutes TTLc
+                Cache::tags(['weather', $cityId])->put($cityWeatherInfo, $json, 60);
+                return $json;
+            }
+        }
+    }
 }

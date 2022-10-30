@@ -2,12 +2,14 @@
 
 namespace App\Extensions;
 
+use Illuminate\Cache\TaggableStore;
+use Illuminate\Cache\TagSet;
 use Illuminate\Contracts\Cache\Store;
 use Momento\Auth\EnvMomentoTokenProvider;
 use Momento\Cache\Errors\UnknownError;
 use Momento\Cache\SimpleCacheClient;
 
-class MomentoStore implements Store
+class MomentoStore extends TaggableStore
 {
     protected SimpleCacheClient $client;
     protected string $cacheName;
@@ -52,8 +54,8 @@ class MomentoStore implements Store
 
     public function increment($key, $value = 1)
     {
-        return true;
-//        throw new UnknownError("increment operations is currently not supported.");
+        return false;
+        //throw new UnknownError("increment operations is currently not supported.");
     }
 
     public function decrement($key, $value = 1)
@@ -79,4 +81,35 @@ class MomentoStore implements Store
     public function getPrefix()
     {
     }
+
+    public function setAdd(string $cacheName, string $setName, string $element, bool $refreshTtl, ?int $ttlSeconds = null)
+    {
+        $result = $this->client->setAdd($cacheName, $setName, $element, $refreshTtl, $ttlSeconds);
+        if ($result->asSuccess()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setFetch(string $cacheName, string $setName) {
+        $result = $this->client->setFetch($cacheName, $setName);
+        if ($result->asHit()) {
+            return $result->asHit()->stringSet();
+        } else {
+            return null;
+        }
+    }
+
+    public function tags($names)
+    {
+        return new MomentoTaggedCache(
+            $this, new TagSet($this, is_array($names) ? $names : func_get_args())
+        );
+    }
+
+    public function getCacheName() {
+        return $this->cacheName;
+    }
+
 }
