@@ -11,6 +11,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/momentohq/client-sdk-php"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/poppoerika/laravel-momento-cache"
         }
     ],
     "require": {
@@ -20,7 +24,8 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "momentohq/client-sdk-php": "dev-main",
-        "symfony/psr-http-message-bridge": "^2.1"
+        "symfony/psr-http-message-bridge": "^2.1",
+        "poppoerika/laravel-momento-cache": "dev-main"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

@@ -23,8 +23,7 @@ class WeatherController extends Controller
     {
         $apiKey = config("weatherapi.api_key");
         $url = "https://api.openweathermap.org/data/2.5/weather?q={$city}&appid={$apiKey}";
-        $cityWeatherInfo = "city_weather_info";
-        $result = Cache::get($cityWeatherInfo);
+        $result = Cache::get($city);
         if (!is_null($result)) {
             return $result;
         } else {
@@ -32,7 +31,7 @@ class WeatherController extends Controller
             if ($res->getStatusCode() == 200) {
                 $json = $res->getBody();
                 // 10 minutes TTLc
-                Cache::put($cityWeatherInfo, $json, 600);
+                Cache::put($city, $json, 600);
                 return $json;
             }
         }
@@ -47,7 +46,7 @@ class WeatherController extends Controller
         $momentoClient->createCache($cacheName);
         $apiKey = config("weatherapi.api_key");
         $url = "https://api.openweathermap.org/data/2.5/weather?q={$zipcode},{$countryCode}&appid={$apiKey}";
-        $zipcodeWeatherInfo = "zipcode_weather_info";
+        $zipcodeWeatherInfo = "{$zipcode}-{$countryCode}";
         $result = $momentoClient->get($cacheName, $zipcodeWeatherInfo);
         if ($result->asHit()) {
             return $result->asHit()->value();
@@ -67,8 +66,8 @@ class WeatherController extends Controller
     public function cityId($cityId) {
         $apiKey = config("weatherapi.api_key");
         $url = "https://api.openweathermap.org/data/2.5/weather?id={$cityId}&appid={$apiKey}";
-        $cityWeatherInfo = "city_id_weather_info";
-        $result = Cache::tags(['weather', $cityId])->get($cityWeatherInfo);
+        $cityWeatherIdInfo = "weather-{$cityId}";
+        $result = Cache::tags(['weather', $cityId])->get($cityWeatherIdInfo);
         if (!is_null($result)) {
             return $result;
         } else {
@@ -76,7 +75,7 @@ class WeatherController extends Controller
             if ($res->getStatusCode() == 200) {
                 $json = $res->getBody();
                 // 10 minutes TTLc
-                Cache::tags(['weather', $cityId])->put($cityWeatherInfo, $json, 60);
+                Cache::tags(['weather', $cityId])->put($cityWeatherIdInfo, $json, 60);
                 return $json;
             }
         }

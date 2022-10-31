@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a174f508409d1daf46c31371a0c84135",
+    "content-hash": "3196875f6e087270c12d4ba5ff84f33e",
     "packages": [
         {
             "name": "brick/math",
@@ -1428,16 +1428,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.3.5",
+            "version": "2.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "84d74485fdb7074f4f9dd6f02ab957b1de513257"
+                "reference": "857afc47ce113454bd629037213378ba3219dd40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/84d74485fdb7074f4f9dd6f02ab957b1de513257",
-                "reference": "84d74485fdb7074f4f9dd6f02ab957b1de513257",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/857afc47ce113454bd629037213378ba3219dd40",
+                "reference": "857afc47ce113454bd629037213378ba3219dd40",
                 "shasum": ""
             },
             "require": {
@@ -1457,7 +1457,7 @@
                 "erusev/parsedown": "^1.0",
                 "ext-json": "*",
                 "github/gfm": "0.29.0",
-                "michelf/php-markdown": "^1.4",
+                "michelf/php-markdown": "^1.4 || ^2.0",
                 "nyholm/psr7": "^1.5",
                 "phpstan/phpstan": "^1.8.2",
                 "phpunit/phpunit": "^9.5.21",
@@ -1530,7 +1530,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-29T10:59:45+00:00"
+            "time": "2022-10-30T16:45:38+00:00"
         },
         {
             "name": "league/config",
@@ -2382,6 +2382,46 @@
                 }
             ],
             "time": "2022-07-30T15:51:26+00:00"
+        },
+        {
+            "name": "poppoerika/laravel-momento-cache",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/poppoerika/laravel-momento-cache.git",
+                "reference": "439451d4c097c292de987fb6685348fa7302bf8f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/poppoerika/laravel-momento-cache/zipball/439451d4c097c292de987fb6685348fa7302bf8f",
+                "reference": "439451d4c097c292de987fb6685348fa7302bf8f",
+                "shasum": ""
+            },
+            "require": {
+                "momentohq/client-sdk-php": "dev-main"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Momento\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "momento",
+                    "email": "eng-deveco@momentohq.com "
+                }
+            ],
+            "description": "Taggable Momento cache driver for Laravel.",
+            "support": {
+                "source": "https://github.com/poppoerika/laravel-momento-cache/tree/main",
+                "issues": "https://github.com/poppoerika/laravel-momento-cache/issues"
+            },
+            "time": "2022-10-31T19:02:41+00:00"
         },
         {
             "name": "psr/container",
@@ -8108,7 +8148,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "momentohq/client-sdk-php": 20
+        "momentohq/client-sdk-php": 20,
+        "poppoerika/laravel-momento-cache": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
