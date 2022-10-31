@@ -44,9 +44,8 @@ curl http://127.0.0.1:8000/api/weather/id/<your-favorite-city-id>
 City id can be found here: http://bulk.openweathermap.org/sample/
 ```
 
+```
 Example:
 curl http://127.0.0.1:8000/api/weather/98101/us
-
-```
 
 ```
