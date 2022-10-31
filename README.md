@@ -4,10 +4,9 @@ Need to install the following:
 
 - [PHP](https://www.php.net/manual/en/install.macosx.packages.php)
 - [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos)
-  Once Composer is installed, you can install `laravel/installer` using composer. [reference](https://www.javatpoint.com/how-to-install-laravel-on-mac)
 - [gRPC for PHP](https://cloud.google.com/php/grpc)
 
-Once the above are installed run:
+Once the above are installed, got to `/weather` and run:
 
 ```bash
 composer install
