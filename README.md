@@ -28,12 +28,18 @@ Once it's running, in another Terminal window type:
 
 ```bash
 curl http://127.0.0.1:8000/api/weather/<your-favorite-city>
+
+Example:
+curl http://127.0.0.1:8000/api/weather/denver
 ```
 
 or
 
 ```bash
 curl http://127.0.0.1:8000/api/weather/<your-favorite-zipcode>/<country-code-such-as-us>
+
+Example:
+curl http://127.0.0.1:8000/api/weather/98101/us
 ```
 
 or
@@ -44,5 +50,5 @@ curl http://127.0.0.1:8000/api/weather/id/<your-favorite-city-id>
 City id can be found here: http://bulk.openweathermap.org/sample/
 
 Example:
-curl http://127.0.0.1:8000/api/weather/98101/us
+curl http://127.0.0.1:8000/api/weather/id/833
 ```
