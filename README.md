@@ -1,5 +1,26 @@
 # laravel-weather-apis
 
+## Run the app via Docker
+
+Build a Docker image for the app:
+
+```bash
+cd weather
+docker build --tag weather-app .
+```
+
+Run the Docker container with the built image above
+
+```bash
+docker run -d -p 8000:8000 weather-app
+```
+
+And try the curl commands below!
+
+---
+
+## If you're interested in setting up PHP...
+
 Need to install the following:
 
 - [PHP](https://www.php.net/manual/en/install.macosx.packages.php)
