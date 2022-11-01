@@ -4,9 +4,10 @@
 
 Build a Docker image for the app:
 
+Please ask Erika for the weather api key.
 ```bash
 cd weather
-docker build --tag weather-app .
+docker build --tag weather-app --build-arg token=<YOUR_AUTH_TOKEN> --build-arg key=<WEATHER_API_KEY> .
 ```
 
 Run the Docker container with the built image above
